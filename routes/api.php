@@ -8,5 +8,8 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-    Route::post('jurnalyear/add', 'BackendController@addjurnalYear');
+    Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
+    Route::post('resetPassword', 'ChangePasswordController@process');
+    Route::post('journal-year/add', 'BackendController@addjurnalYear');
+    Route::post('journal-index/add', 'BackendController@addjurnalIndex');
 });

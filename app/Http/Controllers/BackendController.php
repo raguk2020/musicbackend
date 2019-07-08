@@ -10,7 +10,7 @@ use App\JournalYear;
 
 class BackendController extends Controller
 {
-	public function addjurnalYear(Request $req)
+	public function addJournalYear(Request $req)
 	{
 		try {
 			$input = $req->all();
