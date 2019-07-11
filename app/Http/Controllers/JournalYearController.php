@@ -23,8 +23,7 @@ class JournalYearController extends Controller
 			$insert->save();
 			return $this->successResponse('Journal Year added Successfully');			
 		} catch (Exception $e) {
-			return $this->failedResponse($e);			
-
+			return $this->failedResponse($e);
 		}
 	}
 	public function getJournalYear()
@@ -68,8 +67,8 @@ class JournalYearController extends Controller
 	{
 		try {
 			$input = $req->all();
-			$editId = $input['id'];			
-			$journalyear = JournalYear::find($editId);
+			$editId = $input['params'];			
+			$journalyear = JournalYear::find($editId['id']);
 			$current = $journalyear->status == 'active' ? 'inactive' : 'active';
 			$journalyear->status = $current;
 			$journalyear->save();
@@ -83,9 +82,11 @@ class JournalYearController extends Controller
 	{
 		try {
 			$input = $req->all();
-			$deleteId = $input['id'];			
-			$journalyear = JournalYear::where('id', $deleteId)->delete();			
-			return $this->successResponse1('Journal Year deleted Successfully');			
+			$deleteId = $input['params'];			
+			$journalyear = JournalYear::where('id', $deleteId['id'])->first();			
+			$journalyear->status = 'deleted';
+			$journalyear->save();
+			return $this->successResponse('Journal Year deleted Successfully');			
 		} catch (Exception $e) {
 			return $this->failedResponse($e);
 		}
