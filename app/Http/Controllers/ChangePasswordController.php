@@ -12,8 +12,7 @@ class ChangePasswordController extends Controller
 {
 	public function process(ChangePasswordRequest $request)
 	{
-		return $this->getPasswordResetTableRow($request)->count() > 0 ? $this->changePassword($request) : $this->tokenNotFoundResponse();
-		
+		return $this->getPasswordResetTableRow($request)->count() > 0 ? $this->changePassword($request) : $this->tokenNotFoundResponse();		
 	}
 
 	private function getPasswordResetTableRow($request){
@@ -24,14 +23,12 @@ class ChangePasswordController extends Controller
 	{
 		$user = User::whereEmail($request->email)->first();
 		$user->update(['password' => bcrypt($request->password)]);
-		$this->getPasswordResetTableRow($request)->delete();
-		
+		$this->getPasswordResetTableRow($request)->delete();		
 		return response()->json(['data' => 'Password Successfully Changed'], Response::HTTP_CREATED);
 	}
 
 	private function tokenNotFoundResponse()
 	{
-		return response()->json(['error' => 'Token or Email is incorrect'], Response::HTTP_UNPROCESSABLE_ENTITY);
-		
+		return response()->json(['error' => 'Token or Email is incorrect'], Response::HTTP_UNPROCESSABLE_ENTITY);		
 	}
 }
