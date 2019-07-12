@@ -29,8 +29,9 @@ class JournalYearController extends Controller
 	public function getJournalYear()
 	{
 		try {			
-			$journalyear = JournalYear::where('status', '!=', 'deleted')->get();			
-			return $this->successResponse1('Journal Year added Successfully', $journalyear);			
+			$journalyear = JournalYear::where('status', '!=', 'deleted')->get();
+
+			return $this->successResponse1('Success', $journalyear);			
 		} catch (Exception $e) {
 			return $this->failedResponse($e);
 		}
@@ -42,7 +43,7 @@ class JournalYearController extends Controller
 			$input = $req->all();
 			$editId = $input['id'];			
 			$journalyear = JournalYear::find($editId);			
-			return $this->successResponse1('Journal Year added Successfully', $journalyear);			
+			return $this->successResponse1('Success', $journalyear);			
 		} catch (Exception $e) {
 			return $this->failedResponse($e);
 		}
