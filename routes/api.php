@@ -19,6 +19,7 @@ Route::group([
     Route::post('journal-year/update', 'JournalYearController@updateJournalYear');
     Route::post('journal-year/status', 'JournalYearController@statusJournalYear');
     Route::post('journal-year/delete', 'JournalYearController@deleteJournalYear');
+    Route::post('journal-year/fileupload', 'JournalYearController@fileupload');
 
     Route::get('journal-index/', 'JournalIndexController@getJournalIndex');
     Route::post('journal-index/add', 'JournalIndexController@addJournalIndex');

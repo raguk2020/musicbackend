@@ -19,6 +19,8 @@ class JournalYearController extends Controller
 			$insert->title = $input['title'];
 			$insert->volumeNo = $input['volumeNo'];
 			$insert->year = $input['year'];
+			$insert->pdfLink = $input['filePath'];
+			$insert->fileName = $input['fileName'];
 			$insert->status = 'active';
 			$insert->save();
 			return $this->successResponse('Journal Year added Successfully');			
@@ -57,6 +59,8 @@ class JournalYearController extends Controller
 			$insert->title = $input['title'];
 			$insert->volumeNo = $input['volumeNo'];
 			$insert->year = $input['year'];
+			$insert->pdfLink = $input['filePath'];
+			$insert->fileName = $input['fileName'];
 			$insert->save();
 			return $this->successResponse('Journal Year updated Successfully');			
 		} catch (Exception $e) {
@@ -90,6 +94,20 @@ class JournalYearController extends Controller
 			return $this->successResponse('Journal Year deleted Successfully');			
 		} catch (Exception $e) {
 			return $this->failedResponse($e);
+		}
+	}
+
+	public function fileupload(Request $request) {
+		try {			
+			$file = $request->file('file0');	     
+			$destinationPath = 'uploads';
+			$file->move($destinationPath,$file->getClientOriginalName());
+			$filePath = $destinationPath.'/'.$file->getClientOriginalName();
+			$data['filePath'] = $filePath;
+			$data['fileName'] = $file->getClientOriginalName();
+			return $this->successResponse1('Success', $data);			
+		} catch (Exception $e) {
+			return $this->failedResponse($e);			
 		}
 	}
 

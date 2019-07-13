@@ -23,6 +23,7 @@ class JournalIndexController extends Controller
 			$insert->year = $input['year'];
 			$insert->pages = $input['pages'];
 			$insert->pdfLink = $input['filePath'];
+			$insert->fileName = $input['fileName'];
 			$insert->status = 'active';
 			$insert->save();
 			return $this->successResponse('Journal Index added Successfully');			
@@ -62,6 +63,8 @@ class JournalIndexController extends Controller
 			$update->volumeNo = $input['volumeNo'];
 			$update->year = $input['year'];
 			$update->pages = $input['pages'];
+			$update->pdfLink = $input['filePath'];
+			$update->fileName = (String) $input['fileName'];
 			$update->save();
 			return $this->successResponse('Journal Index updated Successfully');			
 		} catch (Exception $e) {
@@ -111,7 +114,9 @@ class JournalIndexController extends Controller
 			$destinationPath = 'uploads';
 			$file->move($destinationPath,$file->getClientOriginalName());
 			$filePath = $destinationPath.'/'.$file->getClientOriginalName();
-			return $this->successResponse1('Success', $filePath);			
+			$data['filePath'] = $filePath;
+			$data['fileName'] = $file->getClientOriginalName();
+			return $this->successResponse1('Success', $data);			
 		} catch (Exception $e) {
 			return $this->failedResponse($e);			
 		}
