@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JournalIndexRequest;
 use App\JournalIndex;
+use App\Imports\JournalIndexImport;
+use DB;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class JournalIndexController extends Controller
 {   
@@ -119,6 +123,25 @@ class JournalIndexController extends Controller
 			return $this->successResponse1('Success', $data);			
 		} catch (Exception $e) {
 			return $this->failedResponse($e);			
+		}
+	}
+
+	public function importData(Request $request)
+	{
+		try {
+
+			$request->validate([
+				'file0' => 'required'
+			]);
+
+			$path = $request->file('file0')->getRealPath();
+			$data = Excel::import(new JournalIndexImport,$request->file('file0'));		
+
+			$journalyear = JournalIndex::where('status', '!=', 'deleted')->get();
+			return $this->successResponse1('Success', $journalyear);			
+
+		} catch (Exception $e) {
+			return $this->failedResponse($e);
 		}
 	}
 

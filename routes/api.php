@@ -20,6 +20,7 @@ Route::group([
     Route::post('journal-year/status', 'JournalYearController@statusJournalYear');
     Route::post('journal-year/delete', 'JournalYearController@deleteJournalYear');
     Route::post('journal-year/fileupload', 'JournalYearController@fileupload');
+    Route::post('journal-year/import-data', 'JournalYearController@importData');
 
     Route::get('journal-index/', 'JournalIndexController@getJournalIndex');
     Route::post('journal-index/add', 'JournalIndexController@addJournalIndex');
@@ -28,6 +29,7 @@ Route::group([
     Route::post('journal-index/status', 'JournalIndexController@statusJournalIndex');
     Route::post('journal-index/delete', 'JournalIndexController@deleteJournalIndex');
     Route::post('journal-index/fileupload', 'JournalIndexController@fileupload');
+    Route::post('journal-index/import-data', 'JournalIndexController@importData');
 
     Route::get('catalogue/', 'CatalogueController@getcatalogue');
     Route::post('catalogue/add', 'CatalogueController@addcatalogue');
@@ -35,5 +37,6 @@ Route::group([
     Route::post('catalogue/update', 'CatalogueController@updatecatalogue');
     Route::post('catalogue/status', 'CatalogueController@statuscatalogue');
     Route::post('catalogue/delete', 'CatalogueController@deletecatalogue');
+    Route::post('catalogue/import-data', 'CatalogueController@importData');
 
 });

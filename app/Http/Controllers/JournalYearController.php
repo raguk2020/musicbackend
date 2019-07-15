@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JournalYearRequest;
 use App\JournalYear;
+use App\Imports\JournalYearImport;
+use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JournalYearController extends Controller
 {
@@ -100,14 +103,32 @@ class JournalYearController extends Controller
 	public function fileupload(Request $request) {
 		try {			
 			$file = $request->file('file0');	     
-			$destinationPath = 'uploads';
+			$destinationPath = '/Music_Academy_Lib_DigLib/idocs/';
 			$file->move($destinationPath,$file->getClientOriginalName());
-			$filePath = $destinationPath.'/'.$file->getClientOriginalName();
+			$filePath = $destinationPath.$file->getClientOriginalName();
 			$data['filePath'] = $filePath;
 			$data['fileName'] = $file->getClientOriginalName();
 			return $this->successResponse1('Success', $data);			
 		} catch (Exception $e) {
 			return $this->failedResponse($e);			
+		}
+	}
+
+	public function importData(Request $request)
+	{
+		try {
+			$request->validate([
+				'file0' => 'required'
+			]);
+
+			$path = $request->file('file0')->getRealPath();
+			$data = Excel::import(new JournalYearImport,$request->file('file0'));		
+
+			$journalyear = JournalYear::where('status', '!=', 'deleted')->get();
+			return $this->successResponse1('Success', $journalyear);			
+
+		} catch (Exception $e) {
+			return $this->failedResponse($e);
 		}
 	}
 

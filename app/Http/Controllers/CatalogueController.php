@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CatalogueRequest;
 use App\Catalogue;
+use App\Imports\CatalogueImport;
+use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class CatalogueController extends Controller
@@ -122,6 +125,25 @@ class CatalogueController extends Controller
 			$catalogue->status = 'deleted';
 			$catalogue->save();
 			return $this->successResponse('Catalogue deleted Successfully');			
+		} catch (Exception $e) {
+			return $this->failedResponse($e);
+		}
+	}
+
+	public function importData(Request $request)
+	{
+		try {
+
+			$request->validate([
+				'file0' => 'required'
+			]);
+
+			$path = $request->file('file0')->getRealPath();
+			$data = Excel::import(new CatalogueImport,$request->file('file0'));		
+
+			$journalyear = Catalogue::where('status', '!=', 'deleted')->get();
+			return $this->successResponse1('Success', $journalyear);			
+
 		} catch (Exception $e) {
 			return $this->failedResponse($e);
 		}
