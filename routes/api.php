@@ -10,6 +10,8 @@ Route::group([
     Route::post('me', 'AuthController@me');
     Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
     Route::post('resetPassword', 'ChangePasswordController@process');
+    Route::post('profile/update', 'ProfileController@updateProfile');
+    Route::post('changepassword', 'ProfileController@ChangePassword');
 
     Route::get('getdashboard/', 'DashboardController@getdasboardcount');
 
