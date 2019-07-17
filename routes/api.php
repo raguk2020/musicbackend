@@ -11,7 +11,7 @@ Route::group([
     Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
     Route::post('resetPassword', 'ChangePasswordController@process');
     Route::post('profile/update', 'ProfileController@updateProfile');
-    Route::post('changepassword', 'ProfileController@ChangePassword');
+    Route::post('changepassword', 'UpdatePasswordController@ChangePassword');
 
     Route::get('getdashboard/', 'DashboardController@getdasboardcount');
 
@@ -38,6 +38,7 @@ Route::group([
     Route::get('catalogue/edit', 'CatalogueController@editcatalogue');
     Route::post('catalogue/update', 'CatalogueController@updatecatalogue');
     Route::post('catalogue/status', 'CatalogueController@statuscatalogue');
+    Route::post('catalogue/book/status', 'CatalogueController@bookstatuscatalogue');
     Route::post('catalogue/delete', 'CatalogueController@deletecatalogue');
     Route::post('catalogue/import-data', 'CatalogueController@importData');
 

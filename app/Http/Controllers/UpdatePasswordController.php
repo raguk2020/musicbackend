@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\UpdatePasswordRequest;
+use Symfony\Component\HttpFoundation\Response;
+use Validator;
 
 class UpdatePasswordController extends Controller
 {
-	public function ChangePassword(UpdatePasswordRequest $req)
+	public function ChangePassword(UpdatePasswordRequest $request)
 	{
 		try {
-			return $input = $req->all();
-			return $this->successResponse('Journal Index added Successfully');			
+			$input = $request->all();
+			$user = User::find($input['user_id']);
+			$user->password = $input['password'];
+			$user->save();		
+
+			return $this->successResponse('Password changed Successful');			
 		} catch (Exception $e) {			
 			return $this->failedResponse($e);
 		}
@@ -22,7 +28,7 @@ class UpdatePasswordController extends Controller
 	public function failedResponse($error)
 	{
 		return response()->json([
-			'error' => $error,
+			'errors' => $error,
 		], Response::HTTP_NOT_FOUND);		
 	}
 

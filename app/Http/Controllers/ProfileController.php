@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\ProfileRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
 	public function updateProfile(ProfileRequest $req)
 	{
 		try {
-			return $input = $req->all();
-			return $this->successResponse('Journal Index added Successfully');			
+			$input = $req->all();
+			$user = User::find($input['user_id']);
+			$user->name = $input['name'];
+			$user->save();
+			return $this->successResponse('Profile Updated Successfully');			
 		} catch (Exception $e) {			
 			return $this->failedResponse($e);
 		}

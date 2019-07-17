@@ -116,6 +116,21 @@ class CatalogueController extends Controller
 		}
 	}
 
+	public function bookstatuscatalogue(Request $req)
+	{
+		try {
+			$input = $req->all();
+			$editId = $input['params'];			
+			$catalogue = Catalogue::find($editId['id']);
+			$current = $catalogue->bookStatus == 'available' ? 'unavailable' : 'available';
+			$catalogue->bookStatus = $current;
+			$catalogue->save();
+			return $this->successResponse1('Catalogue book status changed Successfully', $current);			
+		} catch (Exception $e) {
+			return $this->failedResponse($e);
+		}
+	}
+
 	public function deletecatalogue(Request $req)
 	{
 		try {
